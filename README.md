@@ -2,6 +2,44 @@
 
 Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de [estcequonmetenprodaujourdhui.info](https://www.estcequonmetenprodaujourdhui.info/) fournissant une décision humoristique et localisée sur le fait de pouvoir déployer ou non en prod aujourd'hui.
 
+## Intégration VS Code
+
+Le dépôt fournit une configuration `.vscode/mcp.json` qui décrit 3 types intégrations possibles : Stdio local avec les sources, HTTP ou bien NPM. Choisissez celui que vous souhaitez utiliser.
+
+```jsonc
+{
+	"servers": {
+		"estcequonmetenprodaujourdhui-stdio": {
+			"type": "stdio",
+			"command": "node",
+			"args": [
+				"dist/mcp-stdio-server.js"
+			]
+		},
+		"estcequonmetenprodaujourdhui-http": {
+			"url": "http://localhost:3000/mcp",
+			"type": "http"
+		},
+		"estcequonmetenprodaujourdhui-npm": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"mcp-estcequonmetenprodaujourdhui@1.0.1"
+			],
+			"env": {}
+		}
+	},
+	"inputs": []
+}
+```
+
+Exemple de conversation dans Github Copilot : 
+> On peut mettre en prod ? 
+
+Réponse du MCP Server : 
+> Non, aujourd'hui c'est dimanche : on ne met pas en production.
+> 🛑 Les astres disent "non" et on n'argumente pas avec les astres.
+
 ## État actuel
 
 - Serveur stdio (SDK-backed) : `src/mcp-stdio-server.ts` → compilé en `dist/mcp-stdio-server.js` (exécuté avec `npm start`).
@@ -27,35 +65,17 @@ npm run build
 
 - Utilisation : `npm start` (après `npm run build`).
 - Le serveur suit le protocole MCP via le SDK `@modelcontextprotocol/sdk` et est adapté pour les intégrations (VS Code, clients MCP).
-- Lancement visible : le serveur écrit sur stderr le message de démarrage `MCP server 'estcequonmetenprodaujourdhui' started on stdio`.
 
 ### HTTP (wrapper)
 
 - Utilisation : `npm run start-http` (après `npm run build`).
 - Endpoints :
   - `POST /mcp` — accepte `{ id, method, params }` et renvoie `{ id, result }`.
-  - `GET /status?date=YYYY-MM-DD&lang=fr` — renvoie la décision pour la date donnée.
-  - `GET /reasons?lang=fr` — renvoie la liste des raisons locales.
 
 ## Internationalisation
 
 Les messages et raisons sont dans `config/reasons/<code>.json`. Le fallback est `fr` si la locale demandée n'existe pas.
 
-## Intégration VS Code
-
-Le dépôt fournit une configuration `.vscode/mcp.json` qui lance le binaire compilé :
-
-```jsonc
-{
-  "servers": {
-    "estcequonmetenprodaujourdhui": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["dist/mcp-stdio-server.js"]
-    }
-  }
-}
-```
 
 ## Tests
 
@@ -63,7 +83,8 @@ Le dépôt fournit une configuration `.vscode/mcp.json` qui lance le binaire com
 npm test
 ```
 
-Les tests couvrent la logique métier (jours, messages), la localisation et les endpoints (stdio + HTTP wrapper).
+Les tests couvrent la logique métier (jours, messages), la localisation et le stdio.
+Le test du MCP server est en cours de réalisation..
 
 ## Structure (extrait)
 
