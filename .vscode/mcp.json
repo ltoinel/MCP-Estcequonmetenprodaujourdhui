@@ -1,6 +1,6 @@
 {
 	"servers": {
-		"estcequelonmetenprodaujourdhui": {
+		"estcequonmetenprodaujourdhui": {
 			"type": "stdio",
 			"command": "node",
 			"args": [

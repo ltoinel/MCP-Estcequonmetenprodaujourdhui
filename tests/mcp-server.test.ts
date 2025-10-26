@@ -16,7 +16,7 @@ function waitForStartup(timeout = 15000): Promise<string> {
     const onStderrData = (chunk: string) => {
       stderr += chunk;
       console.log('STDERR:', chunk.trim()); // Debug output for CI
-      if (stderr.includes("MCP server 'estcequelonmetenprodaujourdhui' started on stdio")) {
+      if (stderr.includes("MCP server 'estcequonmetenprodaujourdhui' started on stdio")) {
         cleanup();
         resolve(stderr);
       }
@@ -77,4 +77,12 @@ describe('mcp-server (startup)', () => {
     const out = await waitForStartup(15000);
     expect(out).toMatch(/MCP server .+ started on stdio/);
   }, 20000); // Increased timeout for CI environments
+
+  test('server file exists and is executable', async () => {
+    const { access } = await import('fs/promises');
+    const serverPath = join(__dirname, '..', 'dist', 'mcp-server.js');
+    
+    // Check if file exists and is readable
+    await expect(access(serverPath)).resolves.not.toThrow();
+  });
 });

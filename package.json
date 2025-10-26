@@ -1,5 +1,5 @@
 {
-  "name": "mcp-estcequelonmetenprodaujourdhui",
+  "name": "mcp-estcequonmetenprodaujourdhui",
   "version": "1.0.0", 
   "description": "MCP Server - Est-ce que l'on met en production aujourd'hui ?",
   "main": "index.js",

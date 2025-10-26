@@ -31,7 +31,7 @@ import { canDeployToday, getDeploymentReasons } from './lib/deployment-logic';
 function createServerInstance(): Server {
   const server = new Server(
     {
-      name: 'estcequelonmetenprodaujourdhui',
+      name: 'estcequonmetenprodaujourdhui',
       version: '1.0.0'
     },
     {
@@ -115,7 +115,7 @@ async function main() {
     const server = createServerInstance();
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    console.error("MCP server 'estcequelonmetenprodaujourdhui' started on stdio");
+    console.error("MCP server 'estcequonmetenprodaujourdhui' started on stdio");
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error('MCP server error:', message);

@@ -1,6 +1,6 @@
 # MCP Server - Est-ce que l'on met en production aujourd'hui ?
 
-Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de https://www.estcequelonmetenprodaujourdhuiaujourdhui.info/.
+Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de https://www.estcequonmetenprodaujourdhui.info/.
 
 ## 🎯 Description
 
@@ -99,7 +99,7 @@ printf '{"id":2,"method":"get_deployment_reasons","params":{"lang":"fr"}}\n' | n
 ```jsonc
 {
   "servers": {
-    "estcequelonmetenprodaujourdhui": {
+    "estcequonmetenprodaujourdhui": {
       "type": "stdio",
       "command": "npm",
       "args": ["start"]  // Utilise mcp-server.ts (SDK officiel)
@@ -112,7 +112,7 @@ printf '{"id":2,"method":"get_deployment_reasons","params":{"lang":"fr"}}\n' | n
 ```jsonc
 {
   "servers": {
-    "estcequelonmetenprodaujourdhui": {
+    "estcequonmetenprodaujourdhui": {
       "type": "stdio",
       "command": "npm",
       "args": ["run", "start-stdio"]  // Utilise mcp-stdio-server.ts
@@ -142,7 +142,7 @@ Configuration manuelle (si l'extension ne la détecte pas) : créez ou éditez `
 ```jsonc
 {
   "servers": {
-    "estcequelonmetenprodaujourdhui": {
+    "estcequonmetenprodaujourdhui": {
       "type": "stdio",
       "command": "npm",
       "args": ["run", "start-stdio"]
@@ -231,7 +231,7 @@ npm list @modelcontextprotocol/sdk
 node dist/mcp-server.js
 ```
 
-Vous devriez voir : `Serveur MCP 'estcequelonmetenprodaujourdhui' démarré sur stdio`
+Vous devriez voir : `Serveur MCP 'estcequonmetenprodaujourdhui' démarré sur stdio`
 
 ## 📚 Ressources
 
