@@ -2,6 +2,11 @@
 
 Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de [estcequonmetenprodaujourdhui.info](https://www.estcequonmetenprodaujourdhui.info/) fournissant une décision humoristique et localisée sur le fait de pouvoir déployer ou non en prod aujourd'hui.
 
+Il bloquera votre agent Github Copilot si vous lui demandez de déployer votre application un dimanche.
+
+Il s'agit d'un exemple de MCP server en Node.js avec un wrapper STDIO et HTTP réutilisable pour d'autres cas d'usage.
+
+
 ## Intégration VS Code
 
 Le dépôt fournit une configuration `.vscode/mcp.json` qui décrit 3 types intégrations possibles : Stdio local avec les sources, HTTP ou bien NPM. Choisissez celui que vous souhaitez utiliser.
@@ -102,24 +107,6 @@ tests/                   # tests Jest
 package.json
 ```
 
-## Dépannage rapide
-
-- Si le serveur ne démarre pas :
-
-  ```bash
-  npm run build
-  npm list @modelcontextprotocol/sdk
-  node dist/mcp-stdio-server.js
-  ```
-
-- Pour tester HTTP :
-
-  ```bash
-  npm run start-http
-  curl -X POST http://localhost:3000/mcp -H 'Content-Type: application/json' -d '{"id":1,"method":"check_deployment_status","params":{"date":"2025-10-26","lang":"fr"}}'
-  ```
-
-## Contribuer
 
 ## Linting
 
@@ -136,6 +123,7 @@ Remarques :
 - La configuration principale est dans `eslint.config.cjs` (format "flat" recommandé par ESLint v9).
 - Prochaine amélioration recommandée : ajouter `lint-staged` + `husky` pour lancer ESLint seulement sur les fichiers modifiés avant commit.
 
+## Contribuer
 
 Les contributions sont bienvenues. Ouvrez une PR, ajoutez des tests si vous modifiez de la logique métier et mettez à jour la documentation si besoin.
 
