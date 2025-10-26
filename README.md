@@ -1,6 +1,6 @@
 # MCP Server - Est-ce que l'on met en production aujourd'hui ?
 
-Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de https://www.estcequonmetenprodaujourdhui.info/.
+Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de https://www.estcequelonmetenprodaujourdhuiaujourdhui.info/.
 
 ## 🎯 Description
 
@@ -18,82 +18,110 @@ Un serveur MCP qui vous aide à décider si vous pouvez mettre en production auj
 npm install
 ```
 
-## 💻 Utilisation avec GitHub Copilot
+## 💻 Utilisation
 
-### 1. Démarrer le serveur MCP
+Le projet fournit **trois façons** d'exposer les mêmes fonctionnalités :
+
+### 1. Serveur MCP officiel (recommandé pour VS Code)
+
+Utilise le SDK officiel `@modelcontextprotocol/sdk` pour une conformité totale au protocole MCP.
 
 ```powershell
 npm start
 ```
 
-### 1b. (Optionnel) Démarrer un serveur HTTP (wrapper)
+**✅ Utilisez ce serveur pour :**
+- Intégration VS Code MCP (`.vscode/mcp.json`)
+- GitHub Copilot et clients MCP officiels
+- Déploiements production nécessitant le protocole MCP standard
 
-Si vous préférez exposer les mêmes outils via HTTP (par ex. pour requêtes curl ou tests), démarrez le wrapper HTTP :
+### 2. Serveur stdio léger (pour scripts et tests)
+
+Version simplifiée sans dépendance au SDK, protocole JSON-RPC line-delimited.
+
+```powershell
+npm run start-stdio
+```
+
+**✅ Utilisez ce serveur pour :**
+- Scripts shell/pipes (`printf | npm run start-stdio`)
+- Tests simples sans overhead du SDK
+- Environnements avec contraintes de dépendances
+
+**Protocole** (line-delimited JSON) :
+```json
+{"id":1,"method":"check_deployment_status","params":{"date":"2025-10-31","lang":"en"}}
+```
+
+### 3. Serveur HTTP (wrapper REST)
+
+Expose les mêmes outils via API REST pour tests HTTP ou intégrations web.
 
 ```powershell
 npm run start-http
 ```
 
-Endpoints utiles :
-- `GET /status` — décision pour la date du jour (même logique que MCP)
--- `GET /reasons` — renvoie les raisons pour la langue demandée (`?lang=xx`) ou la locale par défaut (`fr`) ; retourne le fichier `config/reasons/<code>.json` si disponible.
+**Endpoints** :
+- `POST /mcp` — Format MCP : `{ id, method, params }` → `{ id, result }`
+- `GET /status?lang=fr&date=2025-10-31` — Décision directe
+- `GET /reasons?lang=fr` — Liste des raisons
 
-Langues / internationalisation
---------------------------------
-Le service supporte maintenant des locales. Vous pouvez demander une langue via :
-- le paramètre de requête `?lang=fr` (ex: `/status?lang=en`)
-- ou l'en-tête HTTP `Accept-Language: en,fr;q=0.8`
+---
 
-Le serveur MCP accepte aussi un argument `lang` dans l'appel d'outil (ex. via Copilot) :
-- `check_deployment_status` accepte `{ "lang": "en" }` en argument.
-- `get_deployment_reasons` accepte aussi `{ "lang": "en" }`.
+## 🌍 Langues / Internationalisation
 
-Si une traduction des raisons existe pour la locale demandée (fichiers sous `config/reasons/<code>.json`), elle sera utilisée ; sinon la recherche de secours suit cet ordre :
+Tous les serveurs supportent la localisation via le paramètre `lang` :
 
-1. `config/reasons/fr.json` (fallback privilégié — français)
+**Serveur MCP/stdio** : `{ "lang": "en" }` dans params
+**Serveur HTTP** : `?lang=fr` ou en-tête `Accept-Language: en,fr;q=0.8`
 
-Un fichier `config/reasons/fr.json` a été ajouté pour clarifier que le français est la locale par défaut et pour organiser les fichiers de traductions par langue.
+Fichiers de traductions : `config/reasons/<code>.json`  
+Fallback par défaut : `config/reasons/fr.json`
 
-### Serveur MCP stdio (stdin/stdout)
+---
 
-Une version "stdio" du serveur est fournie : elle permet d'exposer les mêmes outils MCP sur l'entrée/sortie standard. C'est utile pour l'intégration avec VS Code (extension MCP/Copilot) ou pour des clients qui communiquent par pipes.
+## 🔧 Exemples d'utilisation
 
-- Script npm : `npm run start-stdio` (génère et exécute `dist/mcp-stdio-server.js` après `npm run build`).
-- Protocole : lignes JSON (request/response line-delimited). Exemple de requête :
-
-```json
-{"id":1,"method":"check_deployment_status","params":{"date":"2025-10-31","lang":"en"}}
-```
-
-Réponse (une ligne JSON) :
-
-```json
-{"id":1,"result":{...}}
-```
-
-Exemples pratiques (WSL / bash) :
+### Serveur MCP stdio - Tests rapides (WSL/bash)
+### Serveur MCP stdio - Tests rapides (WSL/bash)
 
 ```bash
-# demande unique (le processus lira la ligne, répondra puis quittera)
+# Demande unique
 printf '{"id":1,"method":"check_deployment_status","params":{"date":"2025-10-26","lang":"fr"}}\n' | npm run start-stdio
 
-# récupérer les raisons pour une locale
+# Récupérer les raisons
 printf '{"id":2,"method":"get_deployment_reasons","params":{"lang":"fr"}}\n' | npm run start-stdio
 ```
 
-Pour une intégration persistante (VS Code Remote - WSL ou l'extension MCP), définissez dans `.vscode/mcp.json` une entrée `stdio` :
+### Intégration VS Code (`.vscode/mcp.json`)
 
+**Pour le serveur MCP officiel (recommandé)** :
 ```jsonc
 {
   "servers": {
     "estcequelonmetenprodaujourdhui": {
       "type": "stdio",
       "command": "npm",
-      "args": ["run", "start-stdio"]
+      "args": ["start"]  // Utilise mcp-server.ts (SDK officiel)
     }
-  },
-  "inputs": []
+  }
 }
+```
+
+**Pour le serveur stdio léger** :
+```jsonc
+{
+  "servers": {
+    "estcequelonmetenprodaujourdhui": {
+      "type": "stdio",
+      "command": "npm",
+      "args": ["run", "start-stdio"]  // Utilise mcp-stdio-server.ts
+    }
+  }
+}
+```
+
+**Note** : Les deux fonctionnent, mais `npm start` (serveur MCP officiel) est recommandé pour VS Code.
 ```
 
 Notes :
@@ -165,7 +193,7 @@ Tests inclus :
 ```
 ├── src/
 │   ├── mcp-server.ts          # Serveur MCP principal (build → dist/mcp-server.js)
-│   ├── http-server.ts         # Wrapper HTTP (build → dist/http-server.js)
+│   ├── mcp-http-server.ts         # Wrapper HTTP (build → dist/http-server.js)
 │   ├── mcp-stdio-server.ts    # Serveur stdio (build → dist/mcp-stdio-server.js)
 │   └── lib/
 │       └── deployment-logic.ts # Logique métier réutilisée
@@ -203,7 +231,7 @@ npm list @modelcontextprotocol/sdk
 node dist/mcp-server.js
 ```
 
-Vous devriez voir : `Serveur MCP 'estcequonmetenprod' démarré sur stdio`
+Vous devriez voir : `Serveur MCP 'estcequelonmetenprodaujourdhui' démarré sur stdio`
 
 ## 📚 Ressources
 

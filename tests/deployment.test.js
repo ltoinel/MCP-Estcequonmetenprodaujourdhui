@@ -1,4 +1,4 @@
-const { getDeploymentDecision, getDeploymentReasons } = require('../src/lib/deployment-logic');
+const { getDeploymentDecision, getDeploymentReasons } = require('../dist/lib/deployment-logic');
 
 function parseDateUTC(dateStr) {
   return new Date(dateStr + 'T00:00:00Z');

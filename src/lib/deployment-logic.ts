@@ -1,12 +1,31 @@
+/**
+ * Deployment Decision Logic
+ * 
+ * Core business logic for determining deployment feasibility based on weekday.
+ * Supports internationalization through locale-based reason files and translations.
+ * 
+ * Decision rules:
+ * - Monday/Tuesday/Wednesday → yes (✅)
+ * - Thursday → caution (⚠️)
+ * - Friday → blocked (🚫)
+ * - Saturday/Sunday → no (🛑)
+ */
+
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * Localized translation data including weekday names, decision labels, and message templates.
+ */
 interface I18nTranslation {
   weekdays: string[];
   labels: Record<string, string>;
   message_template?: string;
 }
 
+/**
+ * Complete deployment decision result with all context.
+ */
 interface DecisionResult {
   date: string;
   weekday: string;
@@ -17,12 +36,25 @@ interface DecisionResult {
   message: string;
 }
 
-const i18n = require('../../config/i18n.json');
+import i18n from '../../config/i18n.json';
 
+/**
+ * Returns a random element from an array.
+ * 
+ * @param arr - Array to pick from
+ * @returns Random element or undefined if array is empty
+ */
 function pickRandom<T>(arr: T[]): T | undefined {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+/**
+ * Loads deployment reasons for the specified locale.
+ * Falls back to French (fr.json) if locale file is not found.
+ * 
+ * @param locale - Language code (e.g., 'en', 'fr', 'de')
+ * @returns Map of decision keys to arrays of reason strings
+ */
 function loadReasonsForLocale(locale?: string): Record<string, string[]> {
   const code = locale ? locale.toLowerCase().slice(0, 2) : null;
   if (code) {
@@ -40,15 +72,41 @@ function loadReasonsForLocale(locale?: string): Record<string, string[]> {
   return {};
 }
 
+/**
+ * Retrieves i18n translation data for the specified locale.
+ * Falls back to default locale (French) if not found.
+ * 
+ * @param locale - Language code (e.g., 'en', 'fr', 'de')
+ * @returns Translation object with weekdays, labels, and templates
+ */
 function getI18nForLocale(locale?: string): I18nTranslation {
   const code = locale ? locale.toLowerCase().slice(0, 2) : i18n.defaultLocale || 'fr';
   return i18n.translations[code] || i18n.translations[i18n.defaultLocale] || i18n.translations['fr'];
 }
 
+/**
+ * Checks if deployment is feasible today based on the current date.
+ * 
+ * @param locale - Optional language code for localized reasons
+ * @returns Complete deployment decision with reason and message
+ */
 export function canDeployToday(locale?: string): DecisionResult {
   return getDeploymentDecision(new Date(), locale);
 }
 
+/**
+ * Determines deployment feasibility for a specific date based on weekday rules.
+ * 
+ * Business rules:
+ * - Monday/Tuesday/Wednesday (0-2): yes - safe to deploy ✅
+ * - Thursday (3): caution - risky, avoid if possible ⚠️
+ * - Friday (4): blocked - deployments highly discouraged 🚫
+ * - Saturday/Sunday (5-6): no - weekend, no deployments 🛑
+ * 
+ * @param d - Date to evaluate (uses UTC weekday)
+ * @param locale - Optional language code for localized reasons and labels
+ * @returns Complete decision result with reason, emoji, and formatted message
+ */
 export function getDeploymentDecision(d: Date, locale?: string): DecisionResult {
   const weekdayIdx = d.getUTCDay(); // Sunday=0 .. Saturday=6
   const pythonWeekdayIdx = (weekdayIdx + 6) % 7; // Monday=0 .. Sunday=6
@@ -97,6 +155,15 @@ export function getDeploymentDecision(d: Date, locale?: string): DecisionResult 
   };
 }
 
+/**
+ * Retrieves all deployment reasons for a specific locale.
+ * 
+ * Returns a map of decision keys (yes/caution/blocked/no) to arrays of humorous
+ * reason strings that explain why deployment is allowed or discouraged.
+ * 
+ * @param locale - Optional language code (e.g., 'en', 'fr', 'de')
+ * @returns Map of decision keys to reason arrays
+ */
 export function getDeploymentReasons(locale?: string): Record<string, string[]> {
   return loadReasonsForLocale(locale);
 }

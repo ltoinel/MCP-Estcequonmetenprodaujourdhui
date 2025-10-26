@@ -4,7 +4,7 @@
 			"type": "stdio",
 			"command": "npm",
 			"args": [
-				"run start-stdio"
+				"run start"
 			]
 		}
 	},
