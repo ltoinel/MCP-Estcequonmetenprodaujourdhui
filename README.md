@@ -1,6 +1,6 @@
 # MCP — Est‑ce qu'on met en production aujourd'hui ?
 
-Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de https://www.estcequonmetenprodaujourdhui.info/ fournissant une décision humoristique et localisée sur le fait de déployer ou non
+Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de [estcequonmetenprodaujourdhui.info](https://www.estcequonmetenprodaujourdhui.info/) fournissant une décision humoristique et localisée sur le fait de pouvoir déployer ou non en prod aujourd'hui.
 
 ## État actuel
 
@@ -99,6 +99,22 @@ package.json
   ```
 
 ## Contribuer
+
+## Linting
+
+Le projet utilise ESLint (configuration flat pour ESLint v9) pour analyser le code TypeScript.
+
+Pour lancer le linter :
+
+```bash
+npm run lint      # exécute ESLint sur src/ (script défini dans package.json)
+npm run lint:fix  # tente de corriger automatiquement les problèmes
+```
+
+Remarques :
+- La configuration principale est dans `eslint.config.cjs` (format "flat" recommandé par ESLint v9).
+- Prochaine amélioration recommandée : ajouter `lint-staged` + `husky` pour lancer ESLint seulement sur les fichiers modifiés avant commit.
+
 
 Les contributions sont bienvenues. Ouvrez une PR, ajoutez des tests si vous modifiez de la logique métier et mettez à jour la documentation si besoin.
 

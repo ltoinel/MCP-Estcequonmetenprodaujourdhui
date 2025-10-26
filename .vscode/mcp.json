@@ -1,11 +1,15 @@
 {
 	"servers": {
-		"estcequonmetenprodaujourdhui": {
+		"estcequonmetenprodaujourdhui-stdio": {
 			"type": "stdio",
 			"command": "node",
 			"args": [
 				"dist/mcp-stdio-server.js"
 			]
+		},
+		"estcequonmetenprodaujourdhui-http": {
+			"url": "http://localhost:3000/mcp",
+			"type": "http"
 		}
 	},
 	"inputs": []

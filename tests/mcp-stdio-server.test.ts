@@ -3,23 +3,30 @@ import { join } from 'path';
 
 function waitForStartup(timeout = 15000): Promise<string> {
   return new Promise((resolve, reject) => {
-  const serverPath = join(__dirname, '..', 'dist', 'mcp-stdio-server.js');
-    const child = spawn('node', [serverPath], { 
-      stdio: ['ignore', 'ignore', 'pipe'],
+    const serverPath = join(__dirname, '..', 'dist', 'mcp-stdio-server.js');
+    const child = spawn('node', [serverPath], {
+      stdio: ['ignore', 'pipe', 'pipe'],
       cwd: join(__dirname, '..')
     });
-    
+
+    let stdout = '';
     let stderr = '';
-    
+
+    child.stdout.setEncoding('utf8');
     child.stderr.setEncoding('utf8');
-    
+
+    const onStdoutData = (chunk: string) => {
+      stdout += chunk;
+      console.log('STDOUT:', chunk.trim());
+      if (stdout.includes("MCP server 'estcequonmetenprodaujourdhui' started on stdio")) {
+        cleanup();
+        resolve(stdout);
+      }
+    };
+
     const onStderrData = (chunk: string) => {
       stderr += chunk;
-      console.log('STDERR:', chunk.trim()); // Debug output for CI
-      if (stderr.includes("MCP server 'estcequonmetenprodaujourdhui' started on stdio")) {
-        cleanup();
-        resolve(stderr);
-      }
+      console.log('STDERR:', chunk.trim());
     };
 
     const onError = (err: Error) => {
@@ -29,24 +36,28 @@ function waitForStartup(timeout = 15000): Promise<string> {
     };
 
     const onExit = (code: number | null, signal: string | null) => {
-      if (code !== null && code !== 0 && code !== 130) { // 130 is SIGINT (timeout kill)
+      if (code !== null && code !== 0 && code !== 130) {
         console.log(`Child process exited with code ${code}, signal ${signal}`);
         cleanup();
-        reject(new Error(`Process exited with code ${code}. STDERR: ${stderr}`));
+        reject(new Error(`Process exited with code ${code}. STDOUT: ${stdout} STDERR: ${stderr}`));
       }
     };
 
+    child.stdout.on('data', onStdoutData);
     child.stderr.on('data', onStderrData);
     child.on('error', onError);
     child.on('exit', onExit);
 
     const timeoutId = setTimeout(() => {
-      console.log(`Timeout after ${timeout}ms. STDERR collected: "${stderr}"`);
+      console.log(`Timeout after ${timeout}ms. STDOUT collected: "${stdout}" STDERR: "${stderr}"`);
       cleanup();
-      reject(new Error(`timeout waiting for mcp-server startup after ${timeout}ms. STDERR: "${stderr}"`));
+      reject(new Error(`timeout waiting for mcp-server startup after ${timeout}ms. STDOUT: "${stdout}" STDERR: "${stderr}"`));
     }, timeout);
 
     function cleanup() {
+      try {
+        child.stdout.off('data', onStdoutData);
+      } catch (_) {}
       try {
         child.stderr.off('data', onStderrData);
       } catch (_) {}
@@ -57,7 +68,6 @@ function waitForStartup(timeout = 15000): Promise<string> {
         child.off('exit', onExit);
       } catch (_) {}
       clearTimeout(timeoutId);
-      // Ensure the child is killed if still running
       try {
         if (!child.killed) {
           child.kill('SIGTERM');
