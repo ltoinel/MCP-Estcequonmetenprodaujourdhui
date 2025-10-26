@@ -2,9 +2,9 @@
 	"servers": {
 		"estcequelonmetenprodaujourdhui": {
 			"type": "stdio",
-			"command": "npm",
+			"command": "node",
 			"args": [
-				"run start"
+				"dist/mcp-server.js"
 			]
 		}
 	},
