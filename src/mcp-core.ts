@@ -3,13 +3,23 @@ import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprot
 import { canDeployToday, getDeploymentReasons } from './lib/deployment-logic';
 
 /**
- * Creates and configures an MCP server instance with deployment tools.
+ * @fileoverview
+ * Factory for creating and configuring the MCP server instance with deployment tools.
+ * This module is used by both the stdio and HTTP servers to ensure consistent tool handling.
  *
- * This centralised factory is consumed by both the stdio and HTTP servers so
- * they share the exact same tool handlers and behaviour.
+ * Clean code best practices:
+ * - All tool definitions and handlers are centralized here
+ * - Each tool is described with input schema and documentation
+ * - Unknown tools throw explicit errors
  */
 
+/**
+ * Creates and configures an MCP server instance with deployment tools.
+ *
+ * @returns {Server} Configured MCP server instance
+ */
 export function createServerInstance(): Server {
+  // Instantiate the MCP server with metadata
   const server = new Server(
     {
       name: 'estcequonmetenprodaujourdhui',
@@ -22,6 +32,10 @@ export function createServerInstance(): Server {
     }
   );
 
+  /**
+   * Handler for listing available tools (MCP protocol requirement)
+   * Returns the list of tools with their schemas and descriptions
+   */
   server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
       tools: [
@@ -47,10 +61,16 @@ export function createServerInstance(): Server {
     };
   });
 
+  /**
+   * Handler for tool invocation (MCP protocol requirement)
+   * Dispatches to the correct tool based on the 'name' field
+   * Throws an error for unknown tools
+   */
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { params } = request;
     const { name, arguments: args } = params;
 
+    // Tool: check_deployment_status
     if (name === 'check_deployment_status') {
       const lang = args?.lang as string | undefined;
       const result = canDeployToday(lang);
@@ -64,6 +84,7 @@ export function createServerInstance(): Server {
       };
     }
 
+    // Tool: get_deployment_reasons
     if (name === 'get_deployment_reasons') {
       const lang = args?.lang as string | undefined;
       const reasons = getDeploymentReasons(lang);
@@ -77,6 +98,7 @@ export function createServerInstance(): Server {
       };
     }
 
+    // Unknown tool: throw explicit error
     throw new Error(`Unknown tool: ${name}`);
   });
 

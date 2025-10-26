@@ -1,21 +1,22 @@
 /**
- * Deployment Decision Logic
- * 
- * Core business logic for determining deployment feasibility based on weekday.
- * Supports internationalization through locale-based reason files and translations.
- * 
- * Decision rules:
- * - Monday/Tuesday/Wednesday → yes (✅)
- * - Thursday → caution (⚠️)
- * - Friday → blocked (🚫)
- * - Saturday/Sunday → no (🛑)
+ * @fileoverview
+ * Core business logic for determining if deployment is allowed today.
+ * - Decision is based on the day of the week (Monday-Sunday)
+ * - Supports internationalization (i18n) for reasons and labels
+ * - Used by MCP server tools to provide humorous, localized deployment advice
+ *
+ * Clean code best practices:
+ * - All business rules are explicit and documented
+ * - I18n and reason loading are isolated in helper functions
+ * - All exported functions are pure and side-effect free (except for file reads)
  */
 
 import fs from 'fs';
 import path from 'path';
 
 /**
- * Localized translation data including weekday names, decision labels, and message templates.
+ * Localized translation data structure.
+ * Includes weekday names, decision labels, and message templates for a locale.
  */
 interface I18nTranslation {
   weekdays: string[];
@@ -24,7 +25,8 @@ interface I18nTranslation {
 }
 
 /**
- * Complete deployment decision result with all context.
+ * Complete deployment decision result structure.
+ * Includes all context needed for UI or API response.
  */
 interface DecisionResult {
   date: string;
@@ -39,8 +41,8 @@ interface DecisionResult {
 import i18n from '../../config/i18n.json';
 
 /**
- * Returns a random element from an array.
- * 
+ * Utility: Returns a random element from an array.
+ *
  * @param arr - Array to pick from
  * @returns Random element or undefined if array is empty
  */
@@ -51,7 +53,7 @@ function pickRandom<T>(arr: T[]): T | undefined {
 /**
  * Loads deployment reasons for the specified locale.
  * Falls back to French (fr.json) if locale file is not found.
- * 
+ *
  * @param locale - Language code (e.g., 'en', 'fr', 'de')
  * @returns Map of decision keys to arrays of reason strings
  */
@@ -75,7 +77,7 @@ function loadReasonsForLocale(locale?: string): Record<string, string[]> {
 /**
  * Retrieves i18n translation data for the specified locale.
  * Falls back to default locale (French) if not found.
- * 
+ *
  * @param locale - Language code (e.g., 'en', 'fr', 'de')
  * @returns Translation object with weekdays, labels, and templates
  */
@@ -85,8 +87,8 @@ function getI18nForLocale(locale?: string): I18nTranslation {
 }
 
 /**
- * Checks if deployment is feasible today based on the current date.
- * 
+ * Checks if deployment is feasible today (uses current UTC date).
+ *
  * @param locale - Optional language code for localized reasons
  * @returns Complete deployment decision with reason and message
  */
@@ -96,13 +98,13 @@ export function canDeployToday(locale?: string): DecisionResult {
 
 /**
  * Determines deployment feasibility for a specific date based on weekday rules.
- * 
+ *
  * Business rules:
- * - Monday/Tuesday/Wednesday (0-2): yes - safe to deploy ✅
- * - Thursday (3): caution - risky, avoid if possible ⚠️
- * - Friday (4): blocked - deployments highly discouraged 🚫
- * - Saturday/Sunday (5-6): no - weekend, no deployments 🛑
- * 
+ * - Monday/Tuesday/Wednesday: yes (safe to deploy) ✅
+ * - Thursday: caution (risky, avoid if possible) ⚠️
+ * - Friday: blocked (highly discouraged) 🚫
+ * - Saturday/Sunday: no (weekend, forbidden) 🛑
+ *
  * @param d - Date to evaluate (uses UTC weekday)
  * @param locale - Optional language code for localized reasons and labels
  * @returns Complete decision result with reason, emoji, and formatted message
@@ -157,10 +159,10 @@ export function getDeploymentDecision(d: Date, locale?: string): DecisionResult 
 
 /**
  * Retrieves all deployment reasons for a specific locale.
- * 
+ *
  * Returns a map of decision keys (yes/caution/blocked/no) to arrays of humorous
  * reason strings that explain why deployment is allowed or discouraged.
- * 
+ *
  * @param locale - Optional language code (e.g., 'en', 'fr', 'de')
  * @returns Map of decision keys to reason arrays
  */
