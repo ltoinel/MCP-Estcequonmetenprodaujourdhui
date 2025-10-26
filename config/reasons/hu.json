@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "A CI ma zöldet mutatott — mehet.",
+    "Minden teszt sikeres volt.",
+    "A karbantartó jóváhagyta.",
+    "A pipeline stabil.",
+    "Backup és ellenőrzőlista készen.",
+    "Kis változtatás, nagy haszon.",
+    "Nincsenek incidensek mostanában.",
+    "Feature-flag aktív.",
+    "A kód tisztának tűnik.",
+    "A csapat engedélyezte."
+  ],
+  "caution": [
+    "Figyelem: érdemes monitorozni a deployot.",
+    "Készülj rollback tervvel.",
+    "Ellenőrizd a logokat deploy közben.",
+    "Lépj kicsiben, ne mindent egyszerre.",
+    "Ellenőrizd a kritikus teszteket.",
+    "Előfordulhat instabilitás néhány környezetben.",
+    "Riasztás esetén hívd az on-call-t.",
+    "Tartsd kicsire a deployot és figyeld.",
+    "Készülj fel a visszaállításra."
+  ],
+  "blocked": [
+    "Ma nem — túl kockázatos.",
+    "Hiányoznak kritikus migrációk.",
+    "A tesztek több gépen is megbuknak.",
+    "Nyitott biztonsági probléma.",
+    "A csapat nem hagyta jóvá a release-t.",
+    "A függőségek hibásak.",
+    "Nincs elérhető támogatás deploy után.",
+    "A release szabályzat sérül.",
+    "A deploy gomb zárva.",
+    "Jobb elhalasztani."
+  ],
+  "no": [
+    "Hétvége — ma nem deployolunk.",
+    "A szerverek pihennek, hagyd őket.",
+    "Jobb hétfőn, ha a csapat teljes.",
+    "A tesztek elbújtak — később megtaláljuk őket.",
+    "Élvezd a szabadidőt.",
+    "A csapat offline — tiszteld ezt.",
+    "Javítsd először a kisebb hibákat.",
+    "Írj dokumentációt deploy helyett.",
+    "Folytasd hétfőn."
+  ]
+}

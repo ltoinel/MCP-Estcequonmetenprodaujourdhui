@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI sorridente oggi — procedi.",
+    "Tutti i test sono passati, deploy ok.",
+    "Il manutentore ha dato l'ok.",
+    "Piccola modifica, grande sollievo.",
+    "Pipeline stabile e felice.",
+    "Backup fatto e checklist verde.",
+    "Il codice sembra ben testato.",
+    "Nessun incident nelle ultime ore.",
+    "Feature flag attivato con successo.",
+    "Merge pulito, via libera."
+  ],
+  "caution": [
+    "Attenzione: procedi con cautela e monitoraggio.",
+    "Prepara piano di rollback.",
+    "Controlla i log durante il deploy.",
+    "Meglio deployare a pezzi.",
+    "Assicurati che il DB sia in salute.",
+    "I test integrati mostrano warning.",
+    "Se suona un allarme, avvisa on-call.",
+    "Piccoli cambiamenti, grande attenzione.",
+    "Riduci il blast radius."
+  ],
+  "blocked": [
+    "Oggi no — troppi rischi.",
+    "Mancano migrazioni critiche.",
+    "Test inconsistenti su ambienti diversi.",
+    "Bug di sicurezza aperto.",
+    "Il team non ha approvato il rilascio.",
+    "Dipendenze non aggiornate.",
+    "Nessuno disponibile per il post-deploy.",
+    "Le metriche criticano il cambiamento.",
+    "Il pulsante di deploy è bloccato.",
+    "Rischio troppo alto per oggi."
+  ],
+  "no": [
+    "È weekend — niente deploy.",
+    "I server sono in pausa.",
+    "Meglio aspettare il lunedì.",
+    "Goditi il tempo libero, deploy dopo.",
+    "I test non sono affidabili oggi.",
+    "Team non al completo — non deployare.",
+    "Log confusi, rimandiamo.",
+    "Scrivi una PR di cleanup invece.",
+    "Riposati e torna lunedì con energia."
+  ]
+}

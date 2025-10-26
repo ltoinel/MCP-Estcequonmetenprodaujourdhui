@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "Weil die CI heute freundlich war.",
+    "Alle Unit-Tests haben gelächelt — deploy!",
+    "Der Maintainer hat 'LGTM' getippt.",
+    "Pipeline hat grünes Licht gegeben.",
+    "Kaffee + Tests pass = perfekter Tag.",
+    "Der Merge-Übermensch ist heute wach.",
+    "Die Abhängigkeiten sind gut gelaunt.",
+    "Kein Incident seit dem letzten Commit.",
+    "Dokumentation vorhanden (fast).",
+    "Die Feature-Flags sind gesetzt und brav."
+  ],
+  "caution": [
+    "Vorsicht: kleine Änderungen, Beobachtung empfohlen.",
+    "Backup machen, bevor ihr auf 'Deploy' klickt.",
+    "Logs beobachten — sie könnten weinen.",
+    "Komm mit einem Rückfall-Plan und Kaffee.",
+    "Die QA war müde, prüft trotzdem kurz.",
+    "Kleine Schritte — kein Big Bang.",
+    "Schnelle Kontrolle der Datenmigration notwendig.",
+    "Achte auf Timeouts in den Tests.",
+    "Falls Alarm, immediately call someone who sleeps."
+  ],
+  "blocked": [
+    "Heute nicht — der Build hat entschieden.",
+    "Zu riskant ohne On-Call bereit.",
+    "Die Änderung ist zu gross für einen Freitag.",
+    "Unklare Abhängigkeiten blockieren den Release.",
+    "Tests sind inkonsistent auf verschiedenen Maschinen.",
+    "Das Team hat heute einen 'no deploy' Konsens.",
+    "Fehlende Migrationen — verschieben.",
+    "Feature-Flag fehlt — cannot proceed.",
+    "Security-Problem offen, deploy wäre grob fahrlässig.",
+    "Der Release-Button ist verriegelt."
+  ],
+  "no": [
+    "Wochenende — lass die Server schlafen.",
+    "Nein. Tests sind im Versteckspiel.",
+    "Heute kein Deploy, geniesst die Freizeit.",
+    "Besser am Montag, wenn alle da sind.",
+    "Aufruf zur Entspannung: deploy later.",
+    "Die Fehlerquote ist zu hoch heute.",
+    "Team ist im Off-Modus — respektiert das.",
+    "Logs sind heute nicht kooperativ.",
+    "Schreib eine nette README statt deployen."
+  ]
+}

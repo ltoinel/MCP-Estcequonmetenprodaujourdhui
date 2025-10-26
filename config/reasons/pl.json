@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI dziś był łaskawy — można deployować.",
+    "Wszystkie testy przeszły pomyślnie.",
+    "Opiekun projektu dał zielone światło.",
+    "Pipeline stabilna i spokojna.",
+    "Backup i checklist gotowe.",
+    "Mała zmiana, duże korzyści.",
+    "Brak incydentów w ostatnich godzinach.",
+    "Feature-flag aktywny.",
+    "Kod wygląda schludnie.",
+    "Zespół zatwierdził."
+  ],
+  "caution": [
+    "Uwaga: wdrażaj z monitoringiem.",
+    "Przygotuj plan rollback.",
+    "Sprawdź logi podczas deployu.",
+    "Wdrażaj krokami, nie wszystko naraz.",
+    "Zweryfikuj krytyczne testy.",
+    "Możliwa niestabilność w niektórych środowiskach.",
+    "W razie alarmu kontaktuj on-call.",
+    "Zrób mały deploy i obserwuj.",
+    "Bądź gotowy na szybką rewizję."
+  ],
+  "blocked": [
+    "Dziś nie — zbyt duże ryzyko.",
+    "Brak krytycznych migracji.",
+    "Testy nie przechodzą na różnych maszynach.",
+    "Otwarty problem bezpieczeństwa.",
+    "Zespół nie zatwierdził release'u.",
+    "Zależności są uszkodzone.",
+    "Brak dostępnego wsparcia po wdrożeniu.",
+    "Polityka wydania nie jest spełniona.",
+    "Przycisk deploy zablokowany.",
+    "Proponuję odłożyć."
+  ],
+  "no": [
+    "Weekend — dziś nie wdrażamy.",
+    "Serwery odpoczywają, nie budź ich.",
+    "Lepiej w poniedziałek, gdy zespół obecny.",
+    "Testy schowały się — znajdziemy je później.",
+    "Ciesz się wolnym czasem.",
+    "Zespół offline — uszanuj to.",
+    "Najpierw napraw drobne błędy.",
+    "Zamiast deployu napisz dokumentację.",
+    "Wróć do tematu w poniedziałek."
+  ]
+}

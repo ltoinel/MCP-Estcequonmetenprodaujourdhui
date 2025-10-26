@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI loggade grönt — kör på.",
+    "Alla tester gick igenom.",
+    "Underhållaren gav sitt godkännande.",
+    "Pipeline är stabil och lugn.",
+    "Backup och checklist är klara.",
+    "Liten ändring, stor nytta.",
+    "Inga incidents nyligen.",
+    "Feature-flag är aktiverad.",
+    "Koden ser ren ut.",
+    "Teamet har godkänt."
+  ],
+  "caution": [
+    "Varning: övervaka deployment noga.",
+    "Ha rollback-plan redo.",
+    "Kontrollera loggar under releasen.",
+    "Gör små steg, inte allt på en gång.",
+    "Verifiera viktiga tester.",
+    "Möjlig instabilitet i vissa miljöer.",
+    "Om alarm: kontakta on-call.",
+    "Håll releasen liten och observera.",
+    "Var redo att backa om det behövs."
+  ],
+  "blocked": [
+    "Inte idag — för riskabelt.",
+    "Viktiga migrationer saknas.",
+    "Tester misslyckas på flera maskiner.",
+    "Säkerhetsproblem öppet.",
+    "Teamet har inte godkänt releasen.",
+    "Beroenden är felaktiga.",
+    "Ingen support tillgänglig.",
+    "Releasepolicyn bryts.",
+    "Deploy-knappen är låst.",
+    "Vänta tills allt är redo."
+  ],
+  "no": [
+    "Helg — ingen deployment idag.",
+    "Servrarna vilar, låt dem vara.",
+    "Bättre på måndag när alla är tillbaka.",
+    "Testerna gömmer sig — vi hittar dem senare.",
+    "Njut av ledigheten.",
+    "Teamet är offline — respektera det.",
+    "Fixa småbuggar först.",
+    "Skriv dokumentation istället.",
+    "Återuppta på måndag."
+  ]
+}

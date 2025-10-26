@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI a dat verde astăzi — poți face deploy.",
+    "Toate testele au trecut.",
+    "Mentenanța a aprobat schimbarea.",
+    "Pipeline stabil și liniștit.",
+    "Backup și checklist pregătite.",
+    "Schimbare mică, impact mare.",
+    "Fără incidente în ultimele ore.",
+    "Feature-flag activat.",
+    "Codul pare curat și testat.",
+    "Echipa a spus OK."
+  ],
+  "caution": [
+    "Atenție: monitorizează deploy-ul.",
+    "Ai un plan de rollback pregătit.",
+    "Verifică logurile în timpul deploy-ului.",
+    "Fă pași mici, nu totul dintr-o dată.",
+    "Verifică testele critice.",
+    "Posibilă instabilitate în anumite medii.",
+    "La alarmă, contactează on-call.",
+    "Fă un deploy mic și urmărește.",
+    "Fii pregătit pentru revert."
+  ],
+  "blocked": [
+    "Nu azi — prea riscant.",
+    "Lipsesc migrații critice.",
+    "Testele eșuează pe mai multe mașini.",
+    "Problemă de securitate deschisă.",
+    "Echipa nu a aprobat release-ul.",
+    "Dependențe defecte.",
+    "Fără suport disponibil post-deploy.",
+    "Se încalcă politica de release.",
+    "Butonul de deploy este blocat.",
+    "Mai bine amâni."
+  ],
+  "no": [
+    "Weekend — nu se deployează azi.",
+    "Serverele se odihnesc; lasă-le.",
+    "Mai bine luni, când echipa e completă.",
+    "Testele se ascund — le vom găsi mai târziu.",
+    "Bucură-te de timp liber.",
+    "Echipa e offline — respectă asta.",
+    "Remediază mai întâi bug-urile mici.",
+    "Scrie documentație în loc să deployezi.",
+    "Reia luni."
+  ]
+}

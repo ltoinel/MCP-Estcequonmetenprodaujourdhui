@@ -1,0 +1,12 @@
+{
+	"servers": {
+		"estcequelonmetenprodaujourdhui": {
+			"type": "stdio",
+			"command": "npm",
+			"args": [
+				"run start-stdio"
+			]
+		}
+	},
+	"inputs": []
+}

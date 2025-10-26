@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "La CI sonrió hoy — adelante.",
+    "Todos los tests pasaron, es seguro.",
+    "El equipo dio luz verde tras revisar.",
+    "Pequeño cambio, gran impacto positivo.",
+    "El mantenedor dijo 'LGTM' en privado.",
+    "Pipeline estable y sin fallos recientes.",
+    "Backup listo y checklist verificada.",
+    "El release parece inofensivo hoy.",
+    "La rama principal está tranquila.",
+    "El commit arregla lo que prometía."
+  ],
+  "caution": [
+    "Precaución: deploy con monitorización.",
+    "Ten un plan de rollback listo.",
+    "La build va inestable, vigila los logs.",
+    "Limitá el cambio y hacelo incremental.",
+    "Compra café y revisa los tests críticos.",
+    "Puede funcionar, pero con riesgo medio.",
+    "Revisá alertas en producción antes de empujar.",
+    "Si algo falla, contactá al on-call.",
+    "Haz un deploy pequeño y observa."
+  ],
+  "blocked": [
+    "Hoy no: demasiadas incertidumbres.",
+    "La integración está rota en varios entornos.",
+    "Faltan migraciones críticas.",
+    "Hay un bug abierto que bloquea el release.",
+    "El equipo no aprobó el cambio.",
+    "No hay recursos para manejar incidentes ahora.",
+    "Dependencias inseguras — bloquear deploy.",
+    "No cumple con la política de releases.",
+    "Fallo en pruebas de seguridad.",
+    "El botón de deploy está dormido."
+  ],
+  "no": [
+    "No hoy — es fin de semana.",
+    "Los servidores piden vacaciones.",
+    "Disfrutá el día libre, los deploys esperan.",
+    "Mejor cuando el equipo está completo.",
+    "Los tests no cooperan hoy.",
+    "La estabilidad es prioritaria — no deploy.",
+    "Hoy toca documentación, no deploy.",
+    "Repará primero los pequeños bugs.",
+    "Silencia las alertas y vuelve el lunes."
+  ]
+}

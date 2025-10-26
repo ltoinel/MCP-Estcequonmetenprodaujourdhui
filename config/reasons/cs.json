@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI dnes zahájila zelené světlo — jdeme na to.",
+    "Všechny testy prošly.",
+    "Správce dal souhlas.",
+    "Pipeline je stabilní.",
+    "Záloha a kontrolní seznam připraveny.",
+    "Malá změna, velký přínos.",
+    "Žádné incidenty v poslední době.",
+    "Feature flag je aktivní.",
+    "Kód vypadá čistě.",
+    "Tým schválil."
+  ],
+  "caution": [
+    "Pozor: nasazujte s monitoringem.",
+    "Připravte plán rollback.",
+    "Sledujte logy během deploye.",
+    "Provádějte malé kroky.",
+    "Ověřte kritické testy.",
+    "Možná nestabilita v některých prostředích.",
+    "V případě alarmu kontaktujte on-call.",
+    "Uděláte-li nasazení malé, lépe to monitorovat.",
+    "Buďte připraveni na revert."
+  ],
+  "blocked": [
+    "Dnes ne — příliš riskantní.",
+    "Chybí kritické migrace.",
+    "Testy selhávají na více strojích.",
+    "Otevřený bezpečnostní problém.",
+    "Tým neschválil release.",
+    "Závislosti jsou poškozené.",
+    "Není dostupná podpora po nasazení.",
+    "Porušení politiky vydání.",
+    "Tlačítko deploy je zablokované.",
+    "Lepší odložit."
+  ],
+  "no": [
+    "Víkend — dnes ne nasazujeme.",
+    "Servery odpočívají, nebudit je.",
+    "Lépe v pondělí, když je tým přítomen.",
+    "Testy se schovávají — najdeme je později.",
+    "Užijte si volno.",
+    "Tým je offline — respektujte to.",
+    "Nejprve opravte drobné chyby.",
+    "Napište dokumentaci místo deploye.",
+    "Pokračujte v pondělí."
+  ]
+}

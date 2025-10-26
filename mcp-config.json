@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "estcequelonmetenprodaujourdhui": {
+      "command": "node",
+      "args": ["dist/mcp-stdio-server.js"],
+      "env": {}
+    }
+  }
+}

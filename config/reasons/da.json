@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI gav grønt signal i dag — deploy.",
+    "Alle tests bestod.",
+    "Vedlikeholderen godkendte ændringen.",
+    "Pipeline er stabil og i orden.",
+    "Backup og tjekliste er klar.",
+    "Lille ændring, stor forbedring.",
+    "Ingen incidents for nylig.",
+    "Feature-flag er aktiveret.",
+    "Koden ser sund ud.",
+    "Teamet sagde ja."
+  ],
+  "caution": [
+    "Advarsel: overvåg deployment.",
+    "Forbered rollback-plan.",
+    "Tjek logs under deploy.",
+    "Gør små trin, ikke alt på én gang.",
+    "Kontroller kritiske tests.",
+    "Mulig ustabilitet i visse miljøer.",
+    "Kontakt on-call ved alarm.",
+    "Hold deploy lille og observer.",
+    "Vær klar til at rulle tilbage."
+  ],
+  "blocked": [
+    "Ikke i dag — for risikabelt.",
+    "Mangler kritiske migrationer.",
+    "Tests fejler på flere maskiner.",
+    "Sikkerhedsproblem åbent.",
+    "Teamet har ikke godkendt release.",
+    "Afhængigheder ødelagt.",
+    "Ingen support tilgængelig.",
+    "Release-politik brudt.",
+    "Deploy-knap låst.",
+    "Vent indtil alt er klar."
+  ],
+  "no": [
+    "Weekend — ingen deploy i dag.",
+    "Serverne hviler, lad dem være.",
+    "Bedre mandag når alle er tilbage.",
+    "Testene skjuler sig — find dem senere.",
+    "Nyd tiden fri.",
+    "Teamet er offline — respekter det.",
+    "Fiks småbugs først.",
+    "Skriv dokumentation i stedet.",
+    "Genoptag mandag."
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI näytti vihreää tänään — pistä päälle.",
+    "Kaikki testit läpäisty.",
+    "Ylläpitäjä hyväksyi muutoksen.",
+    "Putki on vakaa.",
+    "Varakopio ja tarkistuslista kunnossa.",
+    "Pieni muutos, suuri hyöty.",
+    "Ei häiriöitä viime aikoina.",
+    "Feature-flag päällä.",
+    "Koodi vaikuttaa siistiltä.",
+    "Tiimi antoi myöntävän vastauksen."
+  ],
+  "caution": [
+    "Varoitus: seuraa julkaisua tarkasti.",
+    "Valmistele rollback-suunnitelma.",
+    "Tarkista lokit deployin aikana.",
+    "Tee pieniä askelia, ei kaikkea kerralla.",
+    "Varmista kriittiset testit.",
+    "Mahdollinen epävakaus joissain ympäristöissä.",
+    "Ota yhteys on-calliin hälytyksen sattuessa.",
+    "Pidä deploy pieni ja tarkkaile.",
+    "Ole valmis palauttamaan tarvittaessa."
+  ],
+  "blocked": [
+    "Ei tänään — liian riskialtista.",
+    "Tärkeitä migraatioita puuttuu.",
+    "Testit epäonnistuvat useissa koneissa.",
+    "Turvallisuusvika auki.",
+    "Tiimi ei ole hyväksynyt julkaisua.",
+    "Riippuvuudet rikki.",
+    "Ei tukea saatavilla julkaisen jälkeen.",
+    "Julkaisupolitiikka rikkoontuu.",
+    "Deploy-painike lukittu.",
+    "Odota kunnes kaikki on valmista."
+  ],
+  "no": [
+    "Viikonloppu — ei julkaisua tänään.",
+    "Palvelimet lepäävät, anna niiden olla.",
+    "Parempi maanantaina, kun kaikki ovat paikalla.",
+    "Testit piilottelevat — etsitään myöhemmin.",
+    "Nauti vapaa-ajasta.",
+    "Tiimi on offline — kunnioita sitä.",
+    "Korjaa ensin pienet bugit.",
+    "Kirjoita dokumentaatio, älä julkaise.",
+    "Jatka maanantaina."
+  ]
+}

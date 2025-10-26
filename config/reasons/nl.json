@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI gaf groen licht vandaag.",
+    "Alle tests geslaagd — deploy!",
+    "De maintainer gaf z'n zegen.",
+    "Kleine verandering, groot effect.",
+    "Pipeline rustig en stabiel.",
+    "Backup en checklist zijn in orde.",
+    "Geen incidents recentelijk.",
+    "Feature-flag staat aan.",
+    "De code ruikt fris en schoon.",
+    "Team heeft akkoord gegeven."
+  ],
+  "caution": [
+    "Let op: deploy met monitoring.",
+    "Zorg voor rollback-plan.",
+    "Kijk goed naar de logs tijdens release.",
+    "Kleine stapjes, niet meteen alles.",
+    "Controleer kritieke tests goed.",
+    "Mogelijk instabiel in sommige omgevingen.",
+    "Als alarm, bel de on-call.",
+    "Maak de deploy klein en observeer.",
+    "Bereid je voor op snelle revert."
+  ],
+  "blocked": [
+    "Vandaag niet — te riskant.",
+    "Belangrijke migraties missen.",
+    "Tests falen op meerdere machines.",
+    "Beveiligingsissue open.",
+    "Team heeft geen groen licht gegeven.",
+    "Afhankelijkheden kapot.",
+    "Geen ondersteuning beschikbaar.",
+    "Release policy wordt geschonden.",
+    "De deployknop is vergrendeld.",
+    "Wacht tot alles gereed is."
+  ],
+  "no": [
+    "Weekend — geen deploy vandaag.",
+    "Servers rusten; laat ze met rust.",
+    "Beter op maandag, dan is iedereen er.",
+    "Tests verstoppen zich; vinden we ze maandag.",
+    "Geniet van je vrije tijd.",
+    "Team is offline — respecteer dat.",
+    "Los eerst kleine bugs op.",
+    "Maak documentatie, geen deploy.",
+    "Reset en kom maandag terug."
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "defaultLocale": "fr",
+  "supported": ["en","fr","de","es","it","nl","pt","sv","no","da","fi","pl","cs","el","hu","ro","bg"],
+  "translations": {
+    "en": {
+      "weekdays": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "labels": {"yes":"YES","caution":"CAUTION","blocked":"BLOCKED","no":"NO"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "fr": {
+      "weekdays": ["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"],
+      "labels": {"yes":"OUI","caution":"ATTENTION","blocked":"IMPOSSIBLE","no":"NON"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "de": {
+      "weekdays": ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"],
+      "labels": {"yes":"JA","caution":"VORSICHT","blocked":"UNMÖGLICH","no":"NEIN"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "es": {
+      "weekdays": ["lunes","martes","miércoles","jueves","viernes","sábado","domingo"],
+      "labels": {"yes":"SÍ","caution":"ATENCIÓN","blocked":"IMPOSIBLE","no":"NO"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "it": {
+      "weekdays": ["lunedì","martedì","mercoledì","giovedì","venerdì","sabato","domenica"],
+      "labels": {"yes":"SÌ","caution":"ATTENZIONE","blocked":"IMPOSSIBILE","no":"NO"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "nl": {
+      "weekdays": ["maandag","dinsdag","woensdag","donderdag","vrijdag","zaterdag","zondag"],
+      "labels": {"yes":"JA","caution":"LET OP","blocked":"ONMOGELIJK","no":"NEE"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "pt": {
+      "weekdays": ["segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado","domingo"],
+      "labels": {"yes":"SIM","caution":"ATENÇÃO","blocked":"IMPOSSÍVEL","no":"NÃO"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "sv": {
+      "weekdays": ["måndag","tisdag","onsdag","torsdag","fredag","lördag","söndag"],
+      "labels": {"yes":"JA","caution":"VARNING","blocked":"OMÖJLIGT","no":"NEJ"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "pl": {
+      "weekdays": ["poniedziałek","wtorek","środa","czwartek","piątek","sobota","niedziela"],
+      "labels": {"yes":"TAK","caution":"UWAGA","blocked":"BLOKOWANE","no":"NIE"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "cs": {
+      "weekdays": ["pondělí","úterý","středa","čtvrtek","pátek","sobota","neděle"],
+      "labels": {"yes":"ANO","caution":"POZOR","blocked":"ZABLOKOVÁNO","no":"NE"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "el": {
+      "weekdays": ["Δευτέρα","Τρίτη","Τετάρτη","Πέμπτη","Παρασκευή","Σάββατο","Κυριακή"],
+      "labels": {"yes":"ΝΑΙ","caution":"ΠΡΟΣΟΧΗ","blocked":"ΑΠΟΚΛΕΙΣΜΕΝΟ","no":"ΟΧΙ"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "hu": {
+      "weekdays": ["hétfő","kedd","szerda","csütörtök","péntek","szombat","vasárnap"],
+      "labels": {"yes":"IGEN","caution":"ÓVATOSSÁG","blocked":"LEZÁRVA","no":"NEM"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "ro": {
+      "weekdays": ["luni","marți","miercuri","joi","vineri","sâmbătă","duminică"],
+      "labels": {"yes":"DA","caution":"ATENȚIE","blocked":"BLOCAT","no":"NU"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "bg": {
+      "weekdays": ["понеделник","вторник","сряда","четвъртък","петък","събота","неделя"],
+      "labels": {"yes":"ДА","caution":"ВНИМАНИЕ","blocked":"БЛОКИРАНО","no":"НЕ"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "da": {
+      "weekdays": ["mandag","tirsdag","onsdag","torsdag","fredag","lørdag","søndag"],
+      "labels": {"yes":"JA","caution":"ADVARSEL","blocked":"BLOKERET","no":"NEJ"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "no": {
+      "weekdays": ["mandag","tirsdag","onsdag","torsdag","fredag","lørdag","søndag"],
+      "labels": {"yes":"JA","caution":"ADVARSEL","blocked":"BLOKKERT","no":"NEI"},
+      "message_template": "{emoji} {label} - {reason}"
+    },
+    "fi": {
+      "weekdays": ["maanantai","tiistai","keskiviikko","torstai","perjantai","lauantai","sunnuntai"],
+      "labels": {"yes":"KYLLÄ","caution":"VAROITUS","blocked":"ESTETTY","no":"EI"},
+      "message_template": "{emoji} {label} - {reason}"
+    }
+  }
+}

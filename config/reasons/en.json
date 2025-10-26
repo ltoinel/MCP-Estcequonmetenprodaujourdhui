@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "Because the planets aligned and Jenkins had its coffee.",
+    "Unicorns approved the pipeline this morning.",
+    "The team cat pressed the merge button with its lucky paw.",
+    "Tests laughed, so let's go.",
+    "The weather forecast predicts a wave of commits — go go go!",
+    "The pipeline got a high-five from CI.",
+    "The lead maintainer said 'LGTM' while sipping coffee.",
+    "The linter cried with joy but didn't break anything.",
+    "All unit tests passed except the intern's (ignore it).",
+    "The 'fixes everything' commit seems credible today."
+  ],
+  "caution": [
+    "Because Friday is the other day — check your checklist.",
+    "The build trembled but is still standing, be cautious!",
+    "You can, but bring coffee and a rollback plan.",
+    "The stars are in 'maybe' mode today.",
+    "Warning: a mischievous bug is lurking in the logs.",
+    "Before deploying, backup the DB and say hello to the boss.",
+    "Enable 'ninja' mode: small deploys, watch the logs.",
+    "Check #alerts — there might be epic messages.",
+    "If you hear a weird noise, press mental 'undo'."
+  ],
+  "blocked": [
+    "Only if you're wearing a party hat and call your mum.",
+    "The release is sponsored by extreme creativity.",
+    "You need a mix of luck and a mystical .env file.",
+    "We can't explain it — just admire and pray.",
+    "Survive the deploy and you might get cookies. Maybe.",
+    "Only one sleep-deprived dev with strong coffee could try.",
+    "Merge at your own risk — ensure the on-call is ready.",
+    "The changelog contains 'works on my machine' — proceed with caution.",
+    "Don't forget to call your teammate: 'pray for me'.",
+    "The deploy button is sealed with an emotional padlock."
+  ],
+  "no": [
+    "It's the weekend: mental load = 0, no deploy.",
+    "Servers are napping, don't wake them.",
+    "The stars say 'no' and we don't argue with stars.",
+    "Tests are playing hide-and-seek; we'll find them Monday.",
+    "Enjoy the weekend — pipelines can wait until Monday.",
+    "Go build a side-project or watch memes — you earned it.",
+    "Alerts are paused: perfect time for a nap.",
+    "Use this time to write docs nobody will read.",
+    "Make a 'cleanup' commit and promise to return Monday."
+  ]
+}

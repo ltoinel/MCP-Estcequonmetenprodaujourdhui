@@ -1,0 +1,48 @@
+{
+  "yes": [
+    "CI feliz hoje — pode subir.",
+    "Todos os testes passaram.",
+    "O mantenedor aprovou o merge.",
+    "Pipeline está estável.",
+    "Backup e checklist prontos.",
+    "Mudança pequena, impacto positivo.",
+    "Sem incidents nas últimas horas.",
+    "Feature flag ativada com sucesso.",
+    "Código limpo e testado.",
+    "Time deu OK."
+  ],
+  "caution": [
+    "Atenção: deploy com monitoramento.",
+    "Tenha rollback pronto.",
+    "Verifique os logs durante o deploy.",
+    "Faça deploy incremental.",
+    "Checar migrações e DB.",
+    "Testes integrados apresentam avisos.",
+    "Se algo falhar, chame o on-call.",
+    "Reduza o blast radius.",
+    "Monitore métricas ativamente."
+  ],
+  "blocked": [
+    "Hoje não — muitos riscos.",
+    "Faltam migrações críticas.",
+    "Testes inconsistentes em ambientes.",
+    "Bug de segurança aberto.",
+    "Time não aprovou o release.",
+    "Dependências quebradas.",
+    "Sem suporte disponível pós-deploy.",
+    "Política de releases não cumprida.",
+    "Botão de deploy bloqueado.",
+    "Melhor adiar."
+  ],
+  "no": [
+    "Fim de semana — não deployar.",
+    "Servidores estão descansando.",
+    "Melhor segunda-feira, com equipe completa.",
+    "Aproveite o tempo livre.",
+    "Testes não confiáveis hoje.",
+    "Equipe offline — respeite.",
+    "Melhore a documentação em vez de deployar.",
+    "Corrija pequenos bugs primeiro.",
+    "Retome na segunda."
+  ]
+}
