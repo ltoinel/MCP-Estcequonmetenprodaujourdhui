@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { canDeployToday, getDeploymentReasons } from './lib/deployment-logic';
+import { getDeploymentDecision, getDeploymentReasons } from './lib/deployment-logic';
 
 // Create the MCP Server (mirror of src/mcp-server.ts behavior)
 // Export an Express app for tests and simple usage (keeps backwards compatibility)
@@ -28,7 +28,7 @@ app.post('/mcp', (req, res) => {
             const lang = (params.lang as string) || getLangFromReq(req);
             const dateStr = params.date as string | undefined;
             const d = dateStr ? new Date(dateStr + 'T00:00:00Z') : new Date();
-            const result = canDeployToday(lang);
+            const result = getDeploymentDecision(d, lang);
             return res.json({ id, result });
         }
 
@@ -50,7 +50,7 @@ app.get('/status', (req, res) => {
     const lang = getLangFromReq(req);
     const dateStr = req.query.date as string | undefined;
     const d = dateStr ? new Date(dateStr + 'T00:00:00Z') : new Date();
-    const result = canDeployToday(lang);
+    const result = getDeploymentDecision(d, lang);
     res.json({ id: null, result });
 });
 
