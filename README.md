@@ -1,4 +1,4 @@
-# MCP — Est‑ce qu'on met en production aujourd'hui ?
+# MCP Server — Est‑ce qu'on met en production aujourd'hui ?
 
 Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de [estcequonmetenprodaujourdhui.info](https://www.estcequonmetenprodaujourdhui.info/) fournissant une décision humoristique et localisée sur le fait de pouvoir déployer ou non en prod aujourd'hui.
 
