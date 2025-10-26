@@ -1,12 +1,12 @@
-const { getDeploymentDecision, getDeploymentReasons } = require('../dist/lib/deployment-logic');
+import { getDeploymentDecision, getDeploymentReasons } from '../dist/lib/deployment-logic';
 
-function parseDateUTC(dateStr) {
+function parseDateUTC(dateStr: string): Date {
   return new Date(dateStr + 'T00:00:00Z');
 }
 
 test('monday', () => {
   const d = parseDateUTC('2025-10-27');
-  const res = getDeploymentDecision(d);
+  const res = getDeploymentDecision(d, 'en');
   expect(res.decision).toBe('yes');
   expect(res.can_deploy).toBe(true);
   expect(res.emoji).toBe('✅');
@@ -14,21 +14,21 @@ test('monday', () => {
 
 test('tuesday', () => {
   const d = parseDateUTC('2025-10-28');
-  const res = getDeploymentDecision(d);
+  const res = getDeploymentDecision(d, 'en');
   expect(res.decision).toBe('yes');
   expect(res.can_deploy).toBe(true);
 });
 
 test('wednesday', () => {
   const d = parseDateUTC('2025-10-29');
-  const res = getDeploymentDecision(d);
+  const res = getDeploymentDecision(d, 'en');
   expect(res.decision).toBe('yes');
   expect(res.can_deploy).toBe(true);
 });
 
 test('thursday', () => {
   const d = parseDateUTC('2025-10-30');
-  const res = getDeploymentDecision(d);
+  const res = getDeploymentDecision(d, 'en');
   expect(res.decision).toBe('caution');
   expect(res.can_deploy).toBe(false);
   expect(res.emoji).toBe('⚠️');
@@ -36,7 +36,7 @@ test('thursday', () => {
 
 test('friday', () => {
   const d = parseDateUTC('2025-10-31');
-  const res = getDeploymentDecision(d);
+  const res = getDeploymentDecision(d, 'en');
   expect(res.decision).toBe('blocked');
   expect(res.can_deploy).toBe(false);
   expect(res.emoji).toBe('🚫');
@@ -44,7 +44,7 @@ test('friday', () => {
 
 test('saturday', () => {
   const d = parseDateUTC('2025-11-01');
-  const res = getDeploymentDecision(d);
+  const res = getDeploymentDecision(d, 'en');
   expect(res.decision).toBe('no');
   expect(res.can_deploy).toBe(false);
   expect(res.emoji).toBe('🛑');
@@ -52,7 +52,7 @@ test('saturday', () => {
 
 test('sunday', () => {
   const d = parseDateUTC('2025-11-02');
-  const res = getDeploymentDecision(d);
+  const res = getDeploymentDecision(d, 'en');
   expect(res.decision).toBe('no');
   expect(res.can_deploy).toBe(false);
 });

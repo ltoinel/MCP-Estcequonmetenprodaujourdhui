@@ -2,7 +2,7 @@
   "mcpServers": {
     "estcequonmetenprodaujourdhui": {
       "command": "node",
-      "args": ["dist/mcp-server.js"],
+    "args": ["dist/mcp-stdio-server.js"],
       "env": {}
     }
   }

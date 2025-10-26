@@ -1,244 +1,107 @@
-# MCP Server - Est-ce que l'on met en production aujourd'hui ?
+# MCP — Est‑ce qu'on met en production aujourd'hui ?
 
-Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de https://www.estcequonmetenprodaujourdhui.info/.
+Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de https://www.estcequonmetenprodaujourdhui.info/ fournissant une décision humoristique et localisée sur le fait de déployer ou non
 
-## 🎯 Description
+## État actuel
 
-Un serveur MCP qui vous aide à décider si vous pouvez mettre en production aujourd'hui, avec des raisons drôles adaptées aux développeurs.
+- Serveur stdio (SDK-backed) : `src/mcp-stdio-server.ts` → compilé en `dist/mcp-stdio-server.js` (exécuté avec `npm start`).
+- Wrapper HTTP (Express) : `src/mcp-http-server.ts` → compilé en `dist/mcp-http-server.js` (exécuté avec `npm run start-http`).
 
-**Règles :**
-- Lundi / Mardi / Mercredi → ✅ yes
-- Jeudi → ⚠️ caution
-- Vendredi → 🚫 blocked
-- Samedi / Dimanche → 🛑 no
-
-## 🚀 Installation
-
-```powershell
-npm install
-```
-
-## 💻 Utilisation
-
-Le projet fournit **trois façons** d'exposer les mêmes fonctionnalités :
-
-### 1. Serveur MCP officiel (recommandé pour VS Code)
-
-Utilise le SDK officiel `@modelcontextprotocol/sdk` pour une conformité totale au protocole MCP.
-
-```powershell
-npm start
-```
-
-**✅ Utilisez ce serveur pour :**
-- Intégration VS Code MCP (`.vscode/mcp.json`)
-- GitHub Copilot et clients MCP officiels
-- Déploiements production nécessitant le protocole MCP standard
-
-### 2. Serveur stdio léger (pour scripts et tests)
-
-Version simplifiée sans dépendance au SDK, protocole JSON-RPC line-delimited.
-
-```powershell
-npm run start-stdio
-```
-
-**✅ Utilisez ce serveur pour :**
-- Scripts shell/pipes (`printf | npm run start-stdio`)
-- Tests simples sans overhead du SDK
-- Environnements avec contraintes de dépendances
-
-**Protocole** (line-delimited JSON) :
-```json
-{"id":1,"method":"check_deployment_status","params":{"date":"2025-10-31","lang":"en"}}
-```
-
-### 3. Serveur HTTP (wrapper REST)
-
-Expose les mêmes outils via API REST pour tests HTTP ou intégrations web.
-
-```powershell
-npm run start-http
-```
-
-**Endpoints** :
-- `POST /mcp` — Format MCP : `{ id, method, params }` → `{ id, result }`
-- `GET /status?lang=fr&date=2025-10-31` — Décision directe
-- `GET /reasons?lang=fr` — Liste des raisons
-
----
-
-## 🌍 Langues / Internationalisation
-
-Tous les serveurs supportent la localisation via le paramètre `lang` :
-
-**Serveur MCP/stdio** : `{ "lang": "en" }` dans params
-**Serveur HTTP** : `?lang=fr` ou en-tête `Accept-Language: en,fr;q=0.8`
-
-Fichiers de traductions : `config/reasons/<code>.json`  
-Fallback par défaut : `config/reasons/fr.json`
-
----
-
-## 🔧 Exemples d'utilisation
-
-### Serveur MCP stdio - Tests rapides (WSL/bash)
-### Serveur MCP stdio - Tests rapides (WSL/bash)
+## Installation / build
 
 ```bash
-# Demande unique
-printf '{"id":1,"method":"check_deployment_status","params":{"date":"2025-10-26","lang":"fr"}}\n' | npm run start-stdio
-
-# Récupérer les raisons
-printf '{"id":2,"method":"get_deployment_reasons","params":{"lang":"fr"}}\n' | npm run start-stdio
+npm install
+npm run build
 ```
 
-### Intégration VS Code (`.vscode/mcp.json`)
+## Scripts importants
 
-**Pour le serveur MCP officiel (recommandé)** :
+- `npm start` — démarre le serveur stdio compilé (`dist/mcp-stdio-server.js`).
+- `npm run start-stdio` — alias pour le serveur stdio.
+- `npm run start-http` — démarre le wrapper HTTP (Express).
+- `npm test` — compile puis lance la suite de tests (Jest).
+
+## Points d'entrée
+
+### stdio (SDK MCP)
+
+- Utilisation : `npm start` (après `npm run build`).
+- Le serveur suit le protocole MCP via le SDK `@modelcontextprotocol/sdk` et est adapté pour les intégrations (VS Code, clients MCP).
+- Lancement visible : le serveur écrit sur stderr le message de démarrage `MCP server 'estcequonmetenprodaujourdhui' started on stdio`.
+
+### HTTP (wrapper)
+
+- Utilisation : `npm run start-http` (après `npm run build`).
+- Endpoints :
+  - `POST /mcp` — accepte `{ id, method, params }` et renvoie `{ id, result }`.
+  - `GET /status?date=YYYY-MM-DD&lang=fr` — renvoie la décision pour la date donnée.
+  - `GET /reasons?lang=fr` — renvoie la liste des raisons locales.
+
+## Internationalisation
+
+Les messages et raisons sont dans `config/reasons/<code>.json`. Le fallback est `fr` si la locale demandée n'existe pas.
+
+## Intégration VS Code
+
+Le dépôt fournit une configuration `.vscode/mcp.json` qui lance le binaire compilé :
+
 ```jsonc
 {
   "servers": {
     "estcequonmetenprodaujourdhui": {
       "type": "stdio",
-      "command": "npm",
-      "args": ["start"]  // Utilise mcp-server.ts (SDK officiel)
+      "command": "node",
+      "args": ["dist/mcp-stdio-server.js"]
     }
   }
 }
 ```
 
-**Pour le serveur stdio léger** :
-```jsonc
-{
-  "servers": {
-    "estcequonmetenprodaujourdhui": {
-      "type": "stdio",
-      "command": "npm",
-      "args": ["run", "start-stdio"]  // Utilise mcp-stdio-server.ts
-    }
-  }
-}
-```
+## Tests
 
-**Note** : Les deux fonctionnent, mais `npm start` (serveur MCP officiel) est recommandé pour VS Code.
-```
-
-Notes :
-- Le mode "pipe" (printf | npm run start-stdio) est pratique pour tests ponctuels. Pour envoyer plusieurs requêtes au même processus, utilisez l'extension MCP de VS Code ou écrivez un petit client qui échange avec stdin/stdout du processus enfant.
-- Si `npm run start-stdio` échoue, vérifiez d'abord que vous avez compilé (`npm run build`) et que `dist/mcp-stdio-server.js` existe.
-
-### 2. Configuration dans VSCode
-
-L'intégration MCP pour GitHub Copilot s'appuie sur un serveur stdio (stdin/stdout). Le dépôt contient une configuration dédiée dans `.vscode/mcp.json` — si vous utilisez VS Code Remote‑WSL, ouvrez le dossier dans WSL puis laissez l'extension démarrer le serveur.
-
-Étapes rapides :
-1. Ouvrez le dossier du projet dans VS Code (option Remote - WSL si vous travaillez depuis Windows)
-2. Installez / activez l'extension MCP / GitHub Copilot Chat qui supporte la découverte via `.vscode/mcp.json`
-3. L'extension démarrera automatiquement le serveur stdio défini dans `.vscode/mcp.json` (ou vous proposera de le lancer)
-
-Configuration manuelle (si l'extension ne la détecte pas) : créez ou éditez `.vscode/mcp.json` avec cette entrée :
-
-```jsonc
-{
-  "servers": {
-    "estcequonmetenprodaujourdhui": {
-      "type": "stdio",
-      "command": "npm",
-      "args": ["run", "start-stdio"]
-    }
-  },
-  "inputs": []
-}
-```
-
-Note : `npm run start-stdio` démarre le serveur stdio (après compilation). Si vous préférez lancer manuellement le serveur sans l'extension, exécutez `npm run build` puis `npm run start-stdio` dans WSL/terminal.
-
-### 3. Outils MCP disponibles
-
-- **check_deployment_status** - Vérifie si on peut déployer aujourd'hui
-- **get_deployment_reasons** - Liste toutes les raisons possibles
-
-## 📝 Exemples de prompts GitHub Copilot
-
-```
-@workspace Est-ce que je peux déployer aujourd'hui ?
-```
-
-```
-@workspace Montre-moi toutes les raisons de déploiement
-```
-
-```
-Avant de merger ma PR, vérifie si c'est un bon jour pour déployer
-```
-
-```
-Mon manager veut que je déploie maintenant. Qu'en pense le MCP ?
-```
-
-## 🧪 Tests
-
-```powershell
+```bash
 npm test
 ```
 
-Tests inclus :
-- ✅ Décisions pour chaque jour de la semaine (7 tests)
-- ✅ Validation que les raisons proviennent du bon fichier de config
-- ✅ Vérification du format des messages
+Les tests couvrent la logique métier (jours, messages), la localisation et les endpoints (stdio + HTTP wrapper).
 
-## 🗂️ Structure
+## Structure (extrait)
 
 ```
-├── src/
-│   ├── mcp-server.ts          # Serveur MCP principal (build → dist/mcp-server.js)
-│   ├── mcp-http-server.ts         # Wrapper HTTP (build → dist/http-server.js)
-│   ├── mcp-stdio-server.ts    # Serveur stdio (build → dist/mcp-stdio-server.js)
-│   └── lib/
-│       └── deployment-logic.ts # Logique métier réutilisée
-├── config/
-│   ├── reasons/               # raisons par locale (ex: en.json, fr.json)
-│   └── i18n.json              # labels et noms de jours pour les locales
-├── dist/                      # Artefacts compilés par `npm run build`
-├── tests/                     # Tests Jest (unit + CLI)
-├── .vscode/
-│   └── mcp.json               # configuration MCP pour l'extension (stdio)
-└── package.json
+src/
+├─ mcp-stdio-server.ts   # Serveur stdio (SDK-backed)
+├─ mcp-http-server.ts    # Wrapper HTTP (Express)
+└─ lib/
+   └─ deployment-logic.ts
+
+config/reasons/          # fichiers de raisons par locale
+dist/                    # artefacts compilés
+tests/                   # tests Jest
+.vscode/mcp.json         # config pour extension MCP (stdio)
+package.json
 ```
 
-## 🔧 Personnalisation
+## Dépannage rapide
 
-Pour modifier les raisons drôles, éditez les fichiers sous `config/reasons/` (ex: `config/reasons/fr.json` ou `config/reasons/en.json`).
+- Si le serveur ne démarre pas :
 
-Chaque décision (`yes`, `caution`, `blocked`, `no`) contient 10 raisons différentes qui sont choisies aléatoirement.
+  ```bash
+  npm run build
+  npm list @modelcontextprotocol/sdk
+  node dist/mcp-stdio-server.js
+  ```
 
-## 🆘 Dépannage
+- Pour tester HTTP :
 
-### Copilot ne voit pas le serveur MCP
+  ```bash
+  npm run start-http
+  curl -X POST http://localhost:3000/mcp -H 'Content-Type: application/json' -d '{"id":1,"method":"check_deployment_status","params":{"date":"2025-10-26","lang":"fr"}}'
+  ```
 
-1. Vérifiez que `.vscode/settings.json` contient la configuration
-2. Redémarrez VSCode complètement
-3. Vérifiez les logs : Command Palette → "GitHub Copilot: View Logs"
+## Contribuer
 
-### Le serveur ne démarre pas
+Les contributions sont bienvenues. Ouvrez une PR, ajoutez des tests si vous modifiez de la logique métier et mettez à jour la documentation si besoin.
 
-```powershell
-# Vérifier que le SDK est installé
-npm list @modelcontextprotocol/sdk
-
-# Tester manuellement (après build)
-node dist/mcp-server.js
-```
-
-Vous devriez voir : `Serveur MCP 'estcequonmetenprodaujourdhui' démarré sur stdio`
-
-## 📚 Ressources
-
-- [Documentation MCP](https://modelcontextprotocol.io)
-- [SDK MCP](https://github.com/modelcontextprotocol/typescript-sdk)
-- [GitHub Copilot Docs](https://docs.github.com/en/copilot)
-
-## 📄 Licence
+## Licence
 
 MIT

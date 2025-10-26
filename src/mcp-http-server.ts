@@ -1,115 +1,168 @@
-/**
- * MCP HTTP Server - REST API Wrapper
- * 
- * Exposes deployment decision logic via HTTP endpoints:
- * - POST /mcp - MCP-format JSON-RPC requests
- * - GET /status - Direct deployment status query
- * - GET /reasons - Retrieve all reasons by locale
- * 
- * Supports locale via query parameter (?lang=en) or Accept-Language header.
- * 
- * Usage: npm run start-http (or node dist/mcp-http-server.js)
- */
 
 import express from 'express';
-import { getDeploymentDecision, getDeploymentReasons } from './lib/deployment-logic';
+import { canDeployToday, getDeploymentReasons } from './lib/deployment-logic';
 
+// Create the MCP Server (mirror of src/mcp-server.ts behavior)
+// Export an Express app for tests and simple usage (keeps backwards compatibility)
 export const app = express();
-const port = process.env.PORT || 3000;
-
 app.use(express.json());
 
-/**
- * Extracts language/locale from request query parameter or Accept-Language header.
- * 
- * @param req - Express request object
- * @returns Language code (e.g., 'en', 'fr') or undefined
- */
 function getLangFromReq(req: express.Request): string | undefined {
-  return (req.query.lang as string) || req.headers['accept-language']?.toString().split(',')[0];
+    return (req.query.lang as string) || req.headers['accept-language']?.toString().split(',')[0];
 }
 
-/**
- * POST /mcp - MCP-format JSON-RPC endpoint
- * 
- * Accepts requests in MCP format:
- * Body: { id, method, params }
- * Response: { id, result } or { id, error }
- * 
- * Supported methods:
- * - check_deployment_status: Returns deployment decision
- * - get_deployment_reasons: Returns all reasons by locale
- */
+// POST /mcp - simple MCP-format JSON-RPC handler (keeps compatibility with tests)
 app.post('/mcp', (req, res) => {
-  const body = req.body as unknown;
-  if (!body || typeof body !== 'object') {
-    return res.status(400).json({ id: null, error: { message: 'Invalid request body' } });
-  }
-
-  const bodyObj = body as Record<string, unknown>;
-  const id = bodyObj.id ?? null;
-  const method = bodyObj.method;
-  const params = (bodyObj.params as Record<string, unknown>) || {};
-
-  try {
-    if (method === 'check_deployment_status') {
-      const lang = (params.lang as string) || getLangFromReq(req);
-      const dateStr = params.date as string | undefined;
-      const d = dateStr ? new Date(dateStr + 'T00:00:00Z') : new Date();
-      const result = getDeploymentDecision(d, lang);
-      return res.json({ id, result });
+    const body = req.body as unknown;
+    if (!body || typeof body !== 'object') {
+        return res.status(400).json({ id: null, error: { message: 'Invalid request body' } });
     }
 
-    if (method === 'get_deployment_reasons') {
-      const lang = (params.lang as string) || getLangFromReq(req);
-      const result = getDeploymentReasons(lang);
-      return res.json({ id, result });
-    }
+    const bodyObj = body as Record<string, unknown>;
+    const id = bodyObj.id ?? null;
+    const method = bodyObj.method;
+    const params = (bodyObj.params as Record<string, unknown>) || {};
 
-    return res.status(400).json({ id, error: { message: 'Unknown method' } });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    return res.status(500).json({ id, error: { message: msg } });
-  }
+    try {
+        if (method === 'check_deployment_status') {
+            const lang = (params.lang as string) || getLangFromReq(req);
+            const dateStr = params.date as string | undefined;
+            const d = dateStr ? new Date(dateStr + 'T00:00:00Z') : new Date();
+            const result = canDeployToday(lang);
+            return res.json({ id, result });
+        }
+
+        if (method === 'get_deployment_reasons') {
+            const lang = (params.lang as string) || getLangFromReq(req);
+            const result = getDeploymentReasons(lang);
+            return res.json({ id, result });
+        }
+
+        return res.status(400).json({ id, error: { message: 'Unknown method' } });
+    } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        return res.status(500).json({ id, error: { message: msg } });
+    }
 });
 
-/**
- * GET /status - Direct deployment status query
- * 
- * Query parameters:
- * - lang: Language code (e.g., 'en', 'fr')
- * - date: Date in YYYY-MM-DD format (defaults to today)
- * 
- * Returns MCP-wrapped response: { id: null, result: DecisionResult }
- */
+// GET /status and /reasons for direct queries
 app.get('/status', (req, res) => {
-  const lang = getLangFromReq(req);
-  const dateStr = req.query.date as string | undefined;
-  const d = dateStr ? new Date(dateStr + 'T00:00:00Z') : new Date();
-  const result = getDeploymentDecision(d, lang);
-  res.json({ id: null, result });
+    const lang = getLangFromReq(req);
+    const dateStr = req.query.date as string | undefined;
+    const d = dateStr ? new Date(dateStr + 'T00:00:00Z') : new Date();
+    const result = canDeployToday(lang);
+    res.json({ id: null, result });
 });
 
-/**
- * GET /reasons - Retrieve all deployment reasons
- * 
- * Query parameters:
- * - lang: Language code (e.g., 'en', 'fr')
- * 
- * Returns MCP-wrapped response: { id: null, result: Record<string, string[]> }
- */
 app.get('/reasons', (req, res) => {
-  const lang = getLangFromReq(req);
-  const reasons = getDeploymentReasons(lang);
-  res.json({ id: null, result: reasons });
+    const lang = getLangFromReq(req);
+    const reasons = getDeploymentReasons(lang);
+    res.json({ id: null, result: reasons });
 });
 
-/**
- * Starts HTTP server when executed directly (not imported for testing).
- * Binds to PORT environment variable or defaults to 3000.
- */
+// When executed directly, start a full SDK-backed MCP server using SSE transport.
+// This uses dynamic imports so requiring this module in tests does not attempt to
+// load ESM-only SDK files inside Jest.
+async function startSdkServer() {
+    const [{ Server }, { SSEServerTransport }, types, deployment] = await Promise.all([
+        import('@modelcontextprotocol/sdk/server/index.js'),
+        import('@modelcontextprotocol/sdk/server/sse.js'),
+        import('@modelcontextprotocol/sdk/types.js'),
+        import('./lib/deployment-logic')
+    ]);
+
+    const { CallToolRequestSchema, ListToolsRequestSchema } = types;
+    const { canDeployToday: canDeploy, getDeploymentReasons: getReasons } = deployment as typeof import('./lib/deployment-logic');
+
+    function createServerInstance() {
+        const server = new Server({ name: 'estcequonmetenprodaujourdhui', version: '1.0.0' }, { capabilities: { tools: {} } });
+
+        server.setRequestHandler(ListToolsRequestSchema, async () => {
+            return {
+                tools: [
+                    {
+                        name: 'check_deployment_status',
+                        description: "Checks if deployment is allowed today based on the day of the week.",
+                        inputSchema: { type: 'object', properties: { lang: { type: 'string' } }, required: [] }
+                    },
+                    {
+                        name: 'get_deployment_reasons',
+                        description: "Returns the complete list of possible reasons for each decision type.",
+                        inputSchema: { type: 'object', properties: { lang: { type: 'string' } }, required: [] }
+                    }
+                ]
+            };
+        });
+
+        server.setRequestHandler(CallToolRequestSchema, async (request) => {
+            const { params } = request;
+            const { name, arguments: args } = params;
+
+            if (name === 'check_deployment_status') {
+                const lang = args?.lang as string | undefined;
+                const result = canDeploy(lang);
+                return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] };
+            }
+
+            if (name === 'get_deployment_reasons') {
+                const lang = args?.lang as string | undefined;
+                const reasons = getReasons(lang);
+                return { content: [{ type: 'text', text: JSON.stringify(reasons, null, 2) }] };
+            }
+
+            throw new Error(`Unknown tool: ${name}`);
+        });
+
+        return server;
+    }
+
+    const server = createServerInstance();
+    const sessions = new Map();
+    const sdkApp = express();
+    sdkApp.use(express.json());
+
+    sdkApp.get('/mcp', async (req, res) => {
+        try {
+            const transport = new SSEServerTransport('/mcp', res);
+            await server.connect(transport);
+            sessions.set(transport.sessionId, transport);
+
+            res.on('close', () => {
+                sessions.delete(transport.sessionId);
+                transport.close().catch(() => { /* ignore */ });
+            });
+        } catch (err) {
+            const msg = err instanceof Error ? err.message : String(err);
+            res.status(500).end(msg);
+        }
+    });
+
+    sdkApp.post('/mcp', async (req, res) => {
+        const sessionId = (req.query.sessionId as string) || undefined;
+        if (!sessionId) return res.status(400).send('Missing sessionId');
+        const transport = sessions.get(sessionId);
+        if (!transport) return res.status(404).send('Session not found');
+        try {
+            await transport.handlePostMessage(req, res);
+        } catch (err) {
+            const msg = err instanceof Error ? err.message : String(err);
+            res.status(500).end(msg);
+        }
+    });
+
+    const port = parseInt(process.env.PORT || '3000');
+    sdkApp.listen(port, () => {
+        console.log(`Serveur MCP HTTP (SDK SSE) démarré sur http://localhost:${port}/mcp`);
+    }).on('error', error => {
+        console.error('Erreur serveur :', error);
+        process.exit(1);
+    });
+}
+
 if (require.main === module) {
-  app.listen(port, () => {
-    console.log(`HTTP wrapper listening on http://localhost:${port}`);
-  });
+    // Start SDK-backed server when executed directly
+    startSdkServer().catch(err => {
+        console.error('Failed to start SDK MCP HTTP server:', err);
+        process.exit(1);
+    });
 }

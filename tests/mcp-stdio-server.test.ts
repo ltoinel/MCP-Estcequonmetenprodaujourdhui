@@ -3,7 +3,7 @@ import { join } from 'path';
 
 function waitForStartup(timeout = 15000): Promise<string> {
   return new Promise((resolve, reject) => {
-    const serverPath = join(__dirname, '..', 'dist', 'mcp-server.js');
+  const serverPath = join(__dirname, '..', 'dist', 'mcp-stdio-server.js');
     const child = spawn('node', [serverPath], { 
       stdio: ['ignore', 'ignore', 'pipe'],
       cwd: join(__dirname, '..')
@@ -80,7 +80,7 @@ describe('mcp-server (startup)', () => {
 
   test('server file exists and is executable', async () => {
     const { access } = await import('fs/promises');
-    const serverPath = join(__dirname, '..', 'dist', 'mcp-server.js');
+  const serverPath = join(__dirname, '..', 'dist', 'mcp-stdio-server.js');
     
     // Check if file exists and is readable
     await expect(access(serverPath)).resolves.not.toThrow();
