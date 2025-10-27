@@ -1,6 +1,6 @@
 {
   "name": "mcp-estcequonmetenprodaujourdhui",
-  "version": "1.0.0-dev",
+  "version": "1.0.x-dev",
   "description": "MCP Server - Est-ce que l'on met en production aujourd'hui ?",
   "main": "dist/mcp-stdio-server.js",
   "scripts": {
