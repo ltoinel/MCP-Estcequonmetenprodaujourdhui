@@ -29,7 +29,7 @@ Le dépôt fournit une configuration `.vscode/mcp.json` qui décrit 3 types int�
 			"type": "stdio",
 			"command": "npx",
 			"args": [
-				"mcp-estcequonmetenprodaujourdhui@1.0.1"
+				"mcp-estcequonmetenprodaujourdhui@1.0.3"
 			],
 			"env": {}
 		}
