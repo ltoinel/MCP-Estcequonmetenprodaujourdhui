@@ -1,5 +1,8 @@
 # MCP Server — Est‑ce qu'on met en production aujourd'hui ?
 
+[![Build & Test](https://github.com/ltoinel/MCP-Estcequonmetenprodaujourdhui/actions/workflows/ci.yml/badge.svg)](https://github.com/ltoinel/MCP-Estcequonmetenprodaujourdhui/actions/workflows/ci.yml)
+[![Tag and Release](https://github.com/ltoinel/MCP-Estcequonmetenprodaujourdhui/actions/workflows/release.yml/badge.svg)](https://github.com/ltoinel/MCP-Estcequonmetenprodaujourdhui/actions/workflows/release.yml)
+
 Serveur MCP (Model Context Protocol) compatible GitHub Copilot, inspiré de [estcequonmetenprodaujourdhui.info](https://www.estcequonmetenprodaujourdhui.info/) fournissant une décision humoristique et localisée sur le fait de pouvoir déployer ou non en prod aujourd'hui.
 
 Il bloquera votre agent Github Copilot si vous lui demandez de déployer votre application un dimanche.
