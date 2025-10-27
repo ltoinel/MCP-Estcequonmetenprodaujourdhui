@@ -9,6 +9,20 @@ Il bloquera votre agent Github Copilot si vous lui demandez de déployer votre a
 
 Il s'agit d'un exemple de MCP server en Node.js avec un wrapper STDIO et HTTP réutilisable pour d'autres cas d'usage.
 
+## Installation en local
+
+Pour lancer le serveur stdio localement : 
+
+```bash
+npx mcp-estcequonmetenprodaujourdhui
+```
+
+Ou le serveur HTTP localement : 
+
+```bash
+npx mcp-estcequonmetenprodaujourdhui-http
+```
+
 
 ## Intégration VS Code
 
@@ -32,7 +46,7 @@ Le dépôt fournit une configuration `.vscode/mcp.json` qui décrit 3 types int�
 			"type": "stdio",
 			"command": "npx",
 			"args": [
-				"mcp-estcequonmetenprodaujourdhui@1.0.3"
+				"mcp-estcequonmetenprodaujourdhui"
 			],
 			"env": {}
 		}
