@@ -55,6 +55,12 @@ Le dépôt fournit une configuration `.vscode/mcp.json` qui décrit 3 types int�
 }
 ```
 
+# Integration Claude Code
+
+```
+claude mcp add gotoprod npx mcp-estcequonmetenprodaujourdhui
+```
+
 Exemple de conversation dans Github Copilot : 
 > On peut mettre en prod ? 
 
@@ -145,5 +151,6 @@ Remarques :
 Les contributions sont bienvenues. Ouvrez une PR, ajoutez des tests si vous modifiez de la logique métier et mettez à jour la documentation si besoin.
 
 ## Licence
+
 
 MIT
